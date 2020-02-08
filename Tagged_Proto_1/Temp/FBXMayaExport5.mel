@@ -1,0 +1,22 @@
+print "Starting maya loading and fbx conversion \n";
+	
+if (`file -q -exists "D:/Past Projects/gamedev1-spring2018.teamwolverine/Tagged_Proto_1/Assets/Prefabs/WhiteHouse.ma"`)
+{		
+	file -o "D:/Past Projects/gamedev1-spring2018.teamwolverine/Tagged_Proto_1/Assets/Prefabs/WhiteHouse.ma";
+	FBXExportEmbeddedTextures -v false;
+	// FBXExportHardEdges -v true;
+	FBXExportApplyConstantKeyReducer -v false;
+	FBXExportShowUI -v false;
+
+	print "Before fbx export\n";
+	FBXExport -f "D:/Past Projects/gamedev1-spring2018.teamwolverine/Tagged_Proto_1/Temp/ExportedFBXFile.fbx";
+	print "after fbx export\n";
+}
+else
+	print "Could not open Maya file.";
+
+sysFile -delete "D:/Past Projects/gamedev1-spring2018.teamwolverine/Tagged_Proto_1/Temp/CommandPipe";
+
+$donepipeKill = `fopen "D:/Past Projects/gamedev1-spring2018.teamwolverine/Tagged_Proto_1/Temp/SyncPipeKill" "w"`;
+fwrite $donepipeKill "Done";
+fclose $donepipeKill;
